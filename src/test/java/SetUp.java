@@ -28,7 +28,7 @@ public class SetUp {
             try {
                 webDriver = new RemoteWebDriver(new URL(HUB_URL), capabilities());
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                e.printStackTrace();
                 throw new RuntimeException(e);
             }
         }
@@ -49,10 +49,9 @@ public class SetUp {
         WebDriverRunner.getWebDriver().quit();
     }
 
-    private static Capabilities capabilities() {
+    private static DesiredCapabilities capabilities() {
         final DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability("browserName", "chrome");
-        capabilities.setCapability("resolution", "1920x1080");
+        capabilities.setBrowserName("chrome");
         return capabilities;
     }
 }
