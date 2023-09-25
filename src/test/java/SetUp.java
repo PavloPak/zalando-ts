@@ -44,7 +44,6 @@ public class SetUp {
         WebDriverRunner.setWebDriver(webDriver);
         System.out.println(" >>>>>>>>>>>>  ADDED DRIVER  ");
         Selenide.open(url);
-        Thread.sleep(15000L);
     }
 
     @AfterClass(alwaysRun = true)
