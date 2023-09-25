@@ -50,12 +50,8 @@ public class SetUp {
     }
 
     private Capabilities capabilities() {
-        final ChromeOptions options = new ChromeOptions();
-        options.addArguments("--ignore-urlfetcher-cert-requests");
-        options.addArguments("--disable-popup-blocking");
         final DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setBrowserName("chrome");
-        capabilities.setCapability(ChromeOptions.CAPABILITY, options);
         capabilities.setCapability("resolution", "1920x1080");
         return capabilities;
     }
