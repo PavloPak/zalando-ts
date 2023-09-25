@@ -18,7 +18,7 @@ public class SetUp {
 
     @BeforeClass
     @Parameters({"browser", "remote", "url", "timeout"})
-    protected void configureDriver(String browser, String remote, String url, long timeout) {
+    protected void configureDriver(String browser, String remote, String url, long timeout) throws Exception{
         final WebDriver webDriver;
         //Selenide configs
         Configuration.timeout = timeout;
@@ -44,6 +44,7 @@ public class SetUp {
         WebDriverRunner.setWebDriver(webDriver);
         System.out.println(" >>>>>>>>>>>>  ADDED DRIVER  ");
         Selenide.open(url);
+        Thread.sleep(15000L);
     }
 
     @AfterClass(alwaysRun = true)
