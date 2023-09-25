@@ -51,7 +51,7 @@ public class SetUp {
 
     private static DesiredCapabilities capabilities() {
         final DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setBrowserName("chrome");
+        capabilities.setBrowserName("firefox");
         return capabilities;
     }
 }
