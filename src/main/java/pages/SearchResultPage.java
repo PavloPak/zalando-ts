@@ -45,8 +45,7 @@ public class SearchResultPage {
 
         if(productPricesList.size()!=0) {
 
-           return "£" + productPricesList.stream().map(entry -> Double.parseDouble(entry.getText().
-                   replace("£", ""))).sorted(Collections.reverseOrder()).toList().get(0);
+           return "£";
         } else
         {
             return ("Array productPricesList is empty");

@@ -3,24 +3,42 @@ import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
+import java.net.URL;
+import org.openqa.selenium.Capabilities;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
 
 public class SetUp {
 
+    private final static String HUB_URL = "http://zalenium-jenkins.zalenium.svc.cluster.local/wd/hub";
+
     @BeforeClass
-    @Parameters({"browser","url", "timeout"})
-    protected void configureDriver(String browser, String url, long timeout) {
+    @Parameters({"browser", "remote", "url", "timeout"})
+    protected void configureDriver(String browser, String remote, String url, long timeout) {
+        final WebDriver webDriver;
         //Selenide configs
         Configuration.timeout = timeout;
         Configuration.screenshots = false;
-        //Webdriver create
-        WebDriverManager.chromedriver().setup();
-        final WebDriver webDriver = new ChromeDriver();
-        webDriver.manage().deleteAllCookies();
-        webDriver.manage().window().maximize();
+
+        if (Boolean.valueOf(remote)) {
+            try {
+                webDriver = new RemoteWebDriver(new URL(HUB_URL), capabilities());
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+        else {
+            //Webdriver create
+            WebDriverManager.chromedriver().setup();
+            webDriver = new ChromeDriver();
+            webDriver.manage().deleteAllCookies();
+            webDriver.manage().window().maximize();
+        }
         //Selenide add webdriver
         WebDriverRunner.setWebDriver(webDriver);
         Selenide.open(url);
@@ -29,5 +47,16 @@ public class SetUp {
     @AfterClass(alwaysRun = true)
     protected void cleanUp() {
         WebDriverRunner.getWebDriver().quit();
+    }
+
+    private Capabilities capabilities() {
+        final ChromeOptions options = new ChromeOptions();
+        options.addArguments("--ignore-urlfetcher-cert-requests");
+        options.addArguments("--disable-popup-blocking");
+        final DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setBrowserName("chrome");
+        capabilities.setCapability(ChromeOptions.CAPABILITY, options);
+        capabilities.setCapability("resolution", "1920x1080");
+        return capabilities;
     }
 }
