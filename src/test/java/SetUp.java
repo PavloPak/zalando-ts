@@ -10,12 +10,11 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import java.net.URL;
 import org.openqa.selenium.Capabilities;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 public class SetUp {
 
-    private final static String HUB_URL = "http://zalenium-jenkins.zalenium.svc.cluster.local/wd/hub";
+    private final static String HUB_URL = "zalenium-jenkins.zalenium.svc.cluster.local/wd/hub";
 
     @BeforeClass
     @Parameters({"browser", "remote", "url", "timeout"})
@@ -29,6 +28,7 @@ public class SetUp {
             try {
                 webDriver = new RemoteWebDriver(new URL(HUB_URL), capabilities());
             } catch (Exception e) {
+                System.out.println(e.getMessage());
                 throw new RuntimeException(e);
             }
         }
@@ -49,9 +49,9 @@ public class SetUp {
         WebDriverRunner.getWebDriver().quit();
     }
 
-    private Capabilities capabilities() {
+    private static Capabilities capabilities() {
         final DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setBrowserName("chrome");
+        capabilities.setCapability("browserName", "Chrome");
         capabilities.setCapability("resolution", "1920x1080");
         return capabilities;
     }
