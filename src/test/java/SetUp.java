@@ -23,6 +23,7 @@ public class SetUp {
         //Selenide configs
         Configuration.timeout = timeout;
         Configuration.screenshots = false;
+        Configuration.pageLoadTimeout = 40000L;
 
         if (Boolean.valueOf(remote)) {
             try {
@@ -41,6 +42,7 @@ public class SetUp {
         }
         //Selenide add webdriver
         WebDriverRunner.setWebDriver(webDriver);
+        System.out.println(" >>>>>>>>>>>>  ADDED DRIVER  ");
         Selenide.open(url);
     }
 

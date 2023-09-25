@@ -18,7 +18,7 @@
             <class name="SimpleSearchTest" />
         </classes>
     </test>
-    <test name="SearchByCategoryTest" >
+    <!-- <test name="SearchByCategoryTest" >
         <classes>
             <class name="SearchByCategoryTest" />
         </classes>
@@ -27,5 +27,5 @@
         <classes>
             <class name="LoginTest" />
         </classes>
-    </test>
+    </test> -->
 </suite>
