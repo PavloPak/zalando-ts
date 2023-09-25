@@ -14,7 +14,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 public class SetUp {
 
-    private final static String HUB_URL = "http://10.245.173.158:80/wd/hub";
+    private final static String HUB_URL = "http://10.245.206.96:80/wd/hub";
 
     @BeforeClass
     @Parameters({"browser", "remote", "url", "timeout"})
