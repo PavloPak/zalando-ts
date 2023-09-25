@@ -14,7 +14,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 public class SetUp {
 
-    private final static String HUB_URL = "zalenium-jenkins.zalenium.svc.cluster.local/wd/hub";
+    private final static String HUB_URL = "http://10.245.173.158:80/wd/hub";
 
     @BeforeClass
     @Parameters({"browser", "remote", "url", "timeout"})
@@ -51,7 +51,7 @@ public class SetUp {
 
     private static Capabilities capabilities() {
         final DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability("browserName", "Chrome");
+        capabilities.setCapability("browserName", "chrome");
         capabilities.setCapability("resolution", "1920x1080");
         return capabilities;
     }
