@@ -9,12 +9,13 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import java.net.URL;
-import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.firefox.FirefoxProfile;
 
 public class SetUp {
 
-    private final static String HUB_URL = "http://10.245.206.96:80/wd/hub";
+    private final static String HUB_URL = "http://10.245.211.59/wd/hub";
 
     @BeforeClass
     @Parameters({"browser", "remote", "url", "timeout"})
@@ -51,9 +52,11 @@ public class SetUp {
         WebDriverRunner.getWebDriver().quit();
     }
 
-    private static DesiredCapabilities capabilities() {
-        final DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setBrowserName("firefox");
+    private static FirefoxOptions capabilities() {
+        final FirefoxOptions capabilities = new FirefoxOptions();
+        capabilities.setCapability("browserName", "Firefox");
+        capabilities.setAcceptInsecureCerts(true);
+
         return capabilities;
     }
 }
