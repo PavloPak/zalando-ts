@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
 
-<suite name="Zalando tests" verbose="2">
+<suite name="Zalando tests" verbose="2" parallel="tests">
     <parameter name="browser" value="chrome"/>
     <parameter name="remote" value="true"/>
     <parameter name="url" value="https://www.zalando.co.uk/"/>
@@ -18,7 +18,7 @@
             <class name="SimpleSearchTest" />
         </classes>
     </test>
-    <!-- <test name="SearchByCategoryTest" >
+    <test name="SearchByCategoryTest" >
         <classes>
             <class name="SearchByCategoryTest" />
         </classes>
@@ -27,5 +27,5 @@
         <classes>
             <class name="LoginTest" />
         </classes>
-    </test> -->
+    </test>
 </suite>
