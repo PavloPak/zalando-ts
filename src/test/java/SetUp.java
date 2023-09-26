@@ -52,12 +52,10 @@ public class SetUp {
         WebDriverRunner.getWebDriver().quit();
     }
 
-    private static FirefoxOptions capabilities() {
-        final FirefoxOptions capabilities = new FirefoxOptions();
+    private static DesiredCapabilities capabilities() {
+        final DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("browserName", "Firefox");
         capabilities.setAcceptInsecureCerts(true);
-        FirefoxProfile profile = new FirefoxProfile();
-        capabilities.setProfile(profile);
 
         return capabilities;
     }
