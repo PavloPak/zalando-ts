@@ -56,6 +56,8 @@ public class SetUp {
         final FirefoxOptions capabilities = new FirefoxOptions();
         capabilities.setCapability("browserName", "Firefox");
         capabilities.setAcceptInsecureCerts(true);
+        FirefoxProfile profile = new FirefoxProfile();
+        capabilities.setProfile(profile);
 
         return capabilities;
     }
