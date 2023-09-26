@@ -10,6 +10,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import java.net.URL;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 
@@ -36,8 +37,10 @@ public class SetUp {
         }
         else {
             //Webdriver create
-            WebDriverManager.chromedriver().setup();
-            webDriver = new ChromeDriver();
+            // WebDriverManager.chromedriver().setup();
+            // webDriver = new ChromeDriver();
+            WebDriverManager.firefoxdriver().setup();
+            webDriver = new FirefoxDriver();
             webDriver.manage().deleteAllCookies();
             webDriver.manage().window().maximize();
         }
@@ -55,7 +58,7 @@ public class SetUp {
     private static DesiredCapabilities capabilities() {
         final DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("browserName", "firefox");
-        capabilities.setAcceptInsecureCerts(true);
+        // capabilities.setAcceptInsecureCerts(true);
 
         return capabilities;
     }
