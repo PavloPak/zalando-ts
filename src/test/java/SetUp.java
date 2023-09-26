@@ -54,7 +54,7 @@ public class SetUp {
 
     private static DesiredCapabilities capabilities() {
         final DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability("browserName", "Firefox");
+        capabilities.setCapability("browserName", "firefox");
         capabilities.setAcceptInsecureCerts(true);
 
         return capabilities;
