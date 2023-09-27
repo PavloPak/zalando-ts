@@ -13,7 +13,7 @@ pipeline {
        steps {
           echo '======  Starting test  ========'
           container('maven') {
-            sh "docker build -t ppak4dev/udemy-dmeo-client:${env.BUILD_NUMBER} ./client "
+            sh "maven clean test "
           }
          }
       }
