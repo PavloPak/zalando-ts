@@ -13,7 +13,7 @@ pipeline {
        steps {
           echo '======  Starting test  ========'
           container('maven') {
-            sh "maven clean test "
+            sh "mvn clean test "
           }
          }
       }
