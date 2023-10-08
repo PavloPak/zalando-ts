@@ -2,43 +2,52 @@ import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
 import io.github.bonigarcia.wdm.WebDriverManager;
+
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Parameters;
 import java.net.URL;
-import org.openqa.selenium.remote.DesiredCapabilities;
+import java.util.HashMap;
+
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.firefox.FirefoxProfile;
 
 public class SetUp {
 
-    private final static String HUB_URL = "http://10.245.211.59/wd/hub";
+    private String IS_REMOTE;
+    private String REMOTE_URL;
 
+    @BeforeSuite
+    protected void getVariables() {
+        IS_REMOTE = System.getProperty("isRemote");
+        String LT_USERNAME = System.getProperty("user");
+        String LT_ACCESS_KEY = System.getProperty("token");
+        REMOTE_URL = "https://" + LT_USERNAME + ":" + LT_ACCESS_KEY + "@hub.lambdatest.com/wd/hub";
+        System.out.println(" ##############  " + IS_REMOTE);
+    }
+    
     @BeforeClass
-    @Parameters({"browser", "remote", "url", "timeout"})
-    protected void configureDriver(String browser, String remote, String url, long timeout) throws Exception{
+    @Parameters({"browser", "url", "timeout"})
+    protected void configureDriver(String browser, String url, long timeout) throws Exception{
         final WebDriver webDriver;
         //Selenide configs
         Configuration.timeout = timeout;
         Configuration.screenshots = false;
         Configuration.pageLoadTimeout = 40000L;
 
-        if (Boolean.valueOf(remote)) {
+        if (Boolean.valueOf(IS_REMOTE)) {
             try {
-                webDriver = new RemoteWebDriver(new URL(HUB_URL), capabilities());
+                webDriver = new RemoteWebDriver(new URL(REMOTE_URL), capabilities());
             } catch (Exception e) {
                 e.printStackTrace();
                 throw new RuntimeException(e);
             }
         }
         else {
-            //Webdriver create
-            // WebDriverManager.chromedriver().setup();
-            // webDriver = new ChromeDriver();
             WebDriverManager.firefoxdriver().setup();
             webDriver = new FirefoxDriver();
             webDriver.manage().deleteAllCookies();
@@ -46,7 +55,6 @@ public class SetUp {
         }
         //Selenide add webdriver
         WebDriverRunner.setWebDriver(webDriver);
-        System.out.println(" >>>>>>>>>>>>  ADDED DRIVER  ");
         Selenide.open(url);
     }
 
@@ -55,11 +63,19 @@ public class SetUp {
         WebDriverRunner.getWebDriver().quit();
     }
 
-    private static DesiredCapabilities capabilities() {
-        final DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability("browserName", "firefox");
-        // capabilities.setAcceptInsecureCerts(true);
+    private static Capabilities capabilities() {
+        ChromeOptions browserOptions = new ChromeOptions();
+        browserOptions.setPlatformName("Windows 10");
+        browserOptions.setBrowserVersion("118.0");
+        HashMap<String, Object> ltOptions = new HashMap<String, Object>();
+        ltOptions.put("selenium_version", "4.0.0");
+        ltOptions.put("w3c", true);
+        ltOptions.put("build", "Jenkins build");
+        ltOptions.put("name", "Test RUN");
+        browserOptions.setCapability("LT:Options", ltOptions);
 
-        return capabilities;
+        return browserOptions;
     }
+
+    
 }

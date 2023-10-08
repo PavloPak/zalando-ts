@@ -3,8 +3,7 @@
 
 <suite name="Zalando tests" verbose="2" >
     <parameter name="browser" value="chrome"/>
-    <parameter name="remote" value="true"/>
-    <parameter name="url" value="https://amazon.com/"/>
+    <parameter name="url" value="https://zalando.co.uk/"/>
     <parameter name="timeout" value="10000"/>
     <parameter name="searchKey" value="bags"/>
     <parameter name="username" value="pufyederda@gufum.com"/>
