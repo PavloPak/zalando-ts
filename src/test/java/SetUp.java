@@ -18,16 +18,18 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class SetUp {
 
-    private String IS_REMOTE;
-    private String REMOTE_URL;
+    private String isRemote;
+    private String remoteUrl;
+    private String buildId;
 
     @BeforeSuite
     protected void getVariables() {
-        IS_REMOTE = System.getProperty("isRemote");
+        isRemote = System.getProperty("isRemote");
         String LT_USERNAME = System.getProperty("user");
         String LT_ACCESS_KEY = System.getProperty("token");
-        REMOTE_URL = "https://" + LT_USERNAME + ":" + LT_ACCESS_KEY + "@hub.lambdatest.com/wd/hub";
-        System.out.println(" ##############  " + IS_REMOTE);
+        buildId = System.getProperty("buildId");
+        remoteUrl = "https://" + LT_USERNAME + ":" + LT_ACCESS_KEY + "@hub.lambdatest.com/wd/hub";
+        System.out.println(" ##############  " + isRemote);
     }
     
     @BeforeClass
@@ -39,9 +41,9 @@ public class SetUp {
         Configuration.screenshots = false;
         Configuration.pageLoadTimeout = 40000L;
 
-        if (Boolean.valueOf(IS_REMOTE)) {
+        if (Boolean.valueOf(isRemote)) {
             try {
-                webDriver = new RemoteWebDriver(new URL(REMOTE_URL), capabilities());
+                webDriver = new RemoteWebDriver(new URL(remoteUrl), capabilities(buildId));
             } catch (Exception e) {
                 e.printStackTrace();
                 throw new RuntimeException(e);
@@ -63,7 +65,7 @@ public class SetUp {
         WebDriverRunner.getWebDriver().quit();
     }
 
-    private static Capabilities capabilities() {
+    private static Capabilities capabilities(String buildNumber) {
         ChromeOptions browserOptions = new ChromeOptions();
         browserOptions.setPlatformName("Windows 10");
         browserOptions.setBrowserVersion("118.0");
@@ -71,7 +73,7 @@ public class SetUp {
         ltOptions.put("selenium_version", "4.0.0");
         ltOptions.put("w3c", true);
         ltOptions.put("build", "Jenkins build");
-        ltOptions.put("name", "Test RUN");
+        ltOptions.put("name", "Test run #" + buildNumber);
         browserOptions.setCapability("LT:Options", ltOptions);
 
         return browserOptions;
