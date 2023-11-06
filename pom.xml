@@ -42,6 +42,12 @@
             <artifactId>selenide</artifactId>
             <version>6.17.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.epam.reportportal</groupId>
+            <artifactId>agent-java-testng</artifactId>
+            <version>5.3.1</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -62,7 +68,7 @@
                 <configuration>
                     <testFailureIgnore>true</testFailureIgnore>
                     <suiteXmlFiles>
-                        <suiteXmlFile>src/test/java/resources/zalando.xml</suiteXmlFile>
+                        <suiteXmlFile>src/test/resources/zalando.xml</suiteXmlFile>
                     </suiteXmlFiles>
                 </configuration>
             </plugin>

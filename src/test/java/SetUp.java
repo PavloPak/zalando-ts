@@ -29,14 +29,13 @@ public class SetUp {
         String LT_ACCESS_KEY = System.getProperty("token");
         buildId = System.getProperty("buildId");
         remoteUrl = "https://" + LT_USERNAME + ":" + LT_ACCESS_KEY + "@hub.lambdatest.com/wd/hub";
-        System.out.println(" ##############  " + isRemote);
     }
-    
+
     @BeforeClass
-    @Parameters({"browser", "url", "timeout"})
-    protected void configureDriver(String browser, String url, long timeout) throws Exception{
+    @Parameters({ "browser", "url", "timeout" })
+    protected void configureDriver(String browser, String url, long timeout) throws Exception {
         final WebDriver webDriver;
-        //Selenide configs
+        // Selenide configs
         Configuration.timeout = timeout;
         Configuration.screenshots = false;
         Configuration.pageLoadTimeout = 40000L;
@@ -48,14 +47,13 @@ public class SetUp {
                 e.printStackTrace();
                 throw new RuntimeException(e);
             }
-        }
-        else {
+        } else {
             WebDriverManager.firefoxdriver().setup();
             webDriver = new FirefoxDriver();
             webDriver.manage().deleteAllCookies();
             webDriver.manage().window().maximize();
         }
-        //Selenide add webdriver
+        // Selenide add webdriver
         WebDriverRunner.setWebDriver(webDriver);
         Selenide.open(url);
     }
@@ -79,5 +77,4 @@ public class SetUp {
         return browserOptions;
     }
 
-    
 }
