@@ -41,6 +41,7 @@ public class SetUp {
         Configuration.pageLoadTimeout = 40000L;
 
         if (Boolean.valueOf(isRemote)) {
+            System.out.println(" >>>>>> " + isRemote);
             try {
                 webDriver = new RemoteWebDriver(new URL(remoteUrl), capabilities(buildId));
             } catch (Exception e) {
